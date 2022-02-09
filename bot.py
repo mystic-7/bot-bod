@@ -69,6 +69,7 @@ def bot():
     chrome_options.add_argument("--no-first-run")
     chrome_options.add_argument("--no-default-browser-check")
     chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--start-maximazed")
     
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
 
