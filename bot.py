@@ -92,9 +92,11 @@ def bot():
             EC.presence_of_element_located((By.XPATH,'//a[@href="/votc_board"]'))
         )
         panel.click()
+        print("Sesión iniciada en Desk")
     except:
         driver.quit
-
+        print("No se logró iniciar sesión en Desk, reiniciar bot")
+        
     #Inicio de sesion BOD
     time.sleep(3)
     driver.execute_script("window.open('https://web.bancadigitalbod.com/nblee6/f/ext/Login/index.xhtml', 'new window')")
@@ -152,7 +154,6 @@ def bot():
         ocassion.click()
         bod_user()
     except:
-        print("A la primera")
 
     #Preguntas de seguridad
     preguntas = sheets.spreadsheets().values().get(
@@ -182,6 +183,7 @@ def bot():
             respuesta.send_keys(preguntas['values'][5][1])
     except:
         driver.quit
+        print("Inicio de sesion fallido, reiniciar bot")
     try:
         respuesta2 = WebDriverWait(driver,5).until(
             EC.presence_of_element_located((By.XPATH,'//input[@id="j_idt13:j_idt14:form-psec:j_idt17:1:respuestaPregunta"]'))
@@ -218,13 +220,13 @@ def bot():
         passtxt.send_keys(clave)
     except:
         driver.quit()
+        print("Inicio de sesion fallido, reiniciar bot")
 
     continuar5 = driver.find_element_by_xpath('//*[@id="form:siguiente"]')
     continuar5.click()
 
     #Busqueda de transacciones tomadas
     driver.switch_to.window(driver.window_handles[0])
-
 
     while TRUE:
         
