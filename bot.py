@@ -551,9 +551,6 @@ def bot():
                         lookup = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Buscar movimientos']"))
                             )
-                        action.move_to_element(lookup)
-                        lookup.click()
-                        lookup.clear()
                         lookup.send_keys(confirmacion)
 
                         match = WebDriverWait(driver,20).until(
