@@ -9,6 +9,7 @@ import pandas as pd
 from datetime import datetime
 from pickle import FALSE, TRUE
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
@@ -55,8 +56,15 @@ sheets = build('sheets','v4', credentials=creds)
 
 def bot():
     #Call de chromedriver
-    PATH = "/usr/local/bin/chromedriver"
-    driver = webdriver.Chrome(PATH)
+    CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+    WINDOW_SIZE = "1920,1080"
+    
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+    chrome_options.add_argument('--no-sandbox')
+    
+    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
 
     #Definir ActionChains
     action = ActionChains(driver)
