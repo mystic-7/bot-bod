@@ -154,6 +154,7 @@ def bot():
         ocassion.click()
         bod_user()
     except:
+        driver.quit
 
     #Preguntas de seguridad
     preguntas = sheets.spreadsheets().values().get(
