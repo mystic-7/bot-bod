@@ -271,7 +271,7 @@ def bot():
             print(tipo,banco)
             
             #Procesar Salida
-            if banco == 'BOD' and tipo == 'Salidas':
+            if banco == 'BOD' and tipo == 'Sell':
 
                 try:
                     #Datos de segunda fila
@@ -491,7 +491,7 @@ def bot():
                 print(datetime.now()-begin_time, tipo)
 
             #Entradas
-            elif banco == 'BOD' and tipo == 'Entradas':
+            elif banco == 'BOD' and tipo == 'Buy':
 
                 try:
                     trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
