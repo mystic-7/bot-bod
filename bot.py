@@ -268,7 +268,8 @@ def bot():
             #Datos de primera fila
             tipo = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima)+']/td[2]/div').text
             banco = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima)+']/td[3]').text
-
+            print(tipo,banco)
+            
             #Procesar Salida
             if banco == 'BOD' and tipo == 'Salidas':
 
