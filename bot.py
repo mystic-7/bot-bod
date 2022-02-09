@@ -63,6 +63,12 @@ def bot():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
     chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+    chromeOptions.addArguments("--test-type");
+    chromeOptions.addArguments("--disable-gpu");
+    chromeOptions.addArguments("--no-first-run");
+    chromeOptions.addArguments("--no-default-browser-check");
+    chromeOptions.addArguments("--ignore-certificate-errors");
     
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
 
@@ -289,7 +295,7 @@ def bot():
                     monto1 = round(float(rsv)*float(tasa),2)
                     confirmacion_salida = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div/div/div[2]/div[1]/div/div/input').get_attribute("class")
 
-                    print(tipo, banco, trans_id, nombre_reserve, tipo_cuenta, num_cuenta, confirmacion_salida)
+                    print(tipo, banco, trans_id, nombre_reserve, tipo_cuenta, num_cuenta)
                 except:
                     driver.quit()
 
