@@ -64,11 +64,11 @@ def bot():
     chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-    chrome_options.addArguments("--test-type");
-    chrome_options.addArguments("--disable-gpu");
-    chrome_options.addArguments("--no-first-run");
-    chrome_options.addArguments("--no-default-browser-check");
-    chrome_options.addArguments("--ignore-certificate-errors");
+    chrome_options.add_arguments("--test-type");
+    chrome_options.add_arguments("--disable-gpu");
+    chrome_options.add_arguments("--no-first-run");
+    chrome_options.add_arguments("--no-default-browser-check");
+    chrome_options.add_arguments("--ignore-certificate-errors");
     
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
 
