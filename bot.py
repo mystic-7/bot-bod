@@ -233,16 +233,19 @@ def bot():
 
     continuar5 = driver.find_element_by_xpath('//*[@id="form:siguiente"]')
     continuar5.click()
-
+    print("Iniciada sesion en banco")
+    
     #Busqueda de transacciones tomadas
     driver.switch_to.window(driver.window_handles[0])
+    print("Buscando transacciones")
 
     while TRUE:
         
         #Transacciones tomadas
         filas = driver.find_elements_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr')
         num_filas = len(filas)
-
+        print("Transacciones en cola", num_filas/2)
+        
         if num_filas > 0:
 
             #Empezar a medir tiempo de operacion
