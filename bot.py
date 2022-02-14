@@ -82,7 +82,7 @@ def bot():
 
     #Credenciales
     usuario = "vastoperador4@gmail.com"
-    clave = "Roma1234"
+    clave = "Italia.3412"
 
     #Login//
     #Usuario
