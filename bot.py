@@ -75,7 +75,10 @@ def bot():
 
     #Definir ActionChains
     action = ActionChains(driver)
-
+    
+    #Bienvenida
+    print("Hola operardor VAST, bienvenido a tu BOT BOD, en breves momentos empezaré a operar."
+       
     #Inicio de sesion DESK
     driver.get("https://desk.reserve.org/login")
     
@@ -240,7 +243,7 @@ def bot():
 
     continuar5 = driver.find_element_by_xpath('//*[@id="form:siguiente"]')
     continuar5.click()
-    print("Iniciada sesion en banco")
+    print("Sesión iniciada en el banco")
     
     #Busqueda de transacciones tomadas
     driver.switch_to.window(driver.window_handles[0])
@@ -294,9 +297,12 @@ def bot():
                     tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[4]/div/p').text
                     num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[5]/div/p').text
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
-                    confirmacion_salida = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div/div/div[2]/div[1]/div/div/input').get_attribute("class")
+                    finalizar_salida = driver.find_element_by_xpath("//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr["+str(ultima+1)+"]/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button").get_attribute("class")
 
-                    print(tipo, banco, trans_id, nombre_reserve, tipo_cuenta, num_cuenta)
+                    print(("Datos de transaccion"),
+                          ("Nombre", "RSV", "Tasa", "Monto"),
+                          (nombre_reserve, rsv, tasa, monto1, finalizar_salida)
+                         )
                 except:
                     driver.quit()
 
@@ -327,7 +333,9 @@ def bot():
 
                 transfers2 = driver.find_element_by_xpath('//*[@id="submenu-ppal-12"]/ul/a[1]/li')
                 transfers2.click()
-
+                
+                print("Entrando a transferencias")
+          
                 #Agregar un nuevo beneficiario
                 try:
                     add = WebDriverWait(driver,20).until(
@@ -347,6 +355,7 @@ def bot():
                         otp = WebDriverWait(driver,5).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@class="ancho100 zonaSeguraInput"]'))
                         )
+                        print("Esperando por clave especial")
                         time.sleep(s)
                         # Call the Gmail API
                         results = gmail.users().labels().list(userId='me').execute()
@@ -365,7 +374,7 @@ def bot():
                             codigo2 = str(codigo[0])
 
                         otp.send_keys(codigo2)
-
+                        print("Clave especial recibida:", codigo2)
                         continuar_otp = driver.find_element_by_xpath('//a[@class="bod-button buttonCodigosOtp button-continuar"]')
                         continuar_otp.click()
 
@@ -379,7 +388,8 @@ def bot():
                         break
                 if error is not None:
                     driver.quit
-
+          
+                print("Realizando transferencia")
                 benf_tipo = WebDriverWait(driver,10).until(
                     EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:select"]'))
                 )
@@ -478,7 +488,8 @@ def bot():
                 confirmacion = WebDriverWait(driver,20).until(
                         EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][6]'))
                 ).text
-
+                print("Transferencia lograda con éxito, número de confirmación:", confirmacion)
+          
                 #Volver a DESK
                 driver.switch_to.window(driver.window_handles[0])
 
@@ -515,7 +526,7 @@ def bot():
                     identificacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[3]/div/p').text
                     tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[4]/div/p').text
                     num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p').text
-                    monto = round(float(rsv)*float(tasa.replace(",",".")),2)
+                    monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
                     confirmacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[6]/div/div/div/p').text
                     print(tipo, banco, trans_id, nombre_reserve, confirmacion,)
                 except:
@@ -687,7 +698,7 @@ def bot():
                 str(usuario_reserve),
                 str(rsv),
                 str(tasa),
-                str(monto),
+                str(monto1),
                 str(telefono),
                 str(beneficiario),
                 str(persona),
