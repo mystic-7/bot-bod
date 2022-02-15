@@ -489,7 +489,7 @@ def bot():
                 
                 #Manejar Salida
                 finalizar_salida = WebDriverWait(driver,20).until(
-                    EC.presence_of_element_located((By.XPATH,"//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained']"))
+                    EC.presence_of_element_located((By.XPATH,"//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled']"))
                 )
                 action.move_to_element(finalizar_salida)
                 finalizar_salida.click()
