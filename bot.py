@@ -490,7 +490,9 @@ def bot():
                 confirmacion = WebDriverWait(driver,20).until(
                         EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t2"]'))
                 )
-                print("Transferencia lograda con éxito, número de confirmación:", confirmacion)
+                for n in confirmacion:
+                    titulo = n.text
+                    print("Transferencia lograda con éxito, número de confirmación:", titulo)
           
                 #Volver a DESK
                 driver.switch_to.window(driver.window_handles[0])
