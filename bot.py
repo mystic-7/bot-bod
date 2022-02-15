@@ -488,28 +488,9 @@ def bot():
 
                 #Copiar confirmación de Salida
                 confirmacion = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][1]'))
+                        EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t2"]'))
                 ).text
-                confirmacion1 = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][2]'))
-                ).text
-                confirmacion2 = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][3]'))
-                ).text
-                confirmacion3 = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][4]'))
-                ).text
-                confirmacion4 = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][5]'))
-                ).text
-                confirmacion5 = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][6]'))
-                ).text
-                confirmacion6 = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][7]'))
-                ).text
-
-                print("Transferencia lograda con éxito, número de confirmación:", confirmacion, confirmacion1, confirmacion2, confirmacion3, confirmacion4, confirmacion5, confirmacion6)
+                print("Transferencia lograda con éxito, número de confirmación:", confirmacion)
           
                 #Volver a DESK
                 driver.switch_to.window(driver.window_handles[0])
