@@ -297,7 +297,7 @@ def bot():
                     tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[4]/div/p').text
                     num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[5]/div/p').text
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
-                    finalizar_salida = driver.find_element_by_xpath("//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr["+str(ultima+1)+"]/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button").get_attribute("class")
+                    finalizar_salida = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button').get_attribute("class")
 
                     print(("Datos de transaccion"),
                           ("Nombre", "RSV", "Tasa", "Monto"),
@@ -500,7 +500,7 @@ def bot():
                 
                 #Manejar Salida
                 finalizar_salida = WebDriverWait(driver,3).until(
-                    EC.presence_of_element_located((By.XPATH,"//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr["+str(ultima+1)+"]/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button"))
+                    EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button'))
                 )
                 action.move_to_element(finalizar_salida)
                 finalizar_salida.click()
@@ -534,23 +534,24 @@ def bot():
                 
                 #Ir a Consultas
                 driver.switch_to.window(driver.window_handles[1])
+                
                 try:
                     menu = WebDriverWait(driver,20).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
                     )
                     menu.click()
+            
+                    consultas = WebDriverWait(driver,20).until(
+                        EC.presence_of_element_located((By.XPATH,'//*[@id="ico-menu-3"]'))
+                    )
+                    consultas.click()
+
+                    consultas2 = WebDriverWait(driver,20).until(
+                        EC.presence_of_element_located((By.XPATH,'//*[@id="submenu-ppal-3"]/ul/a[1]/li'))
+                    )
+                    consultas2.click()
                 except:
                     driver.quit
-            
-                consultas = WebDriverWait(driver,20).until(
-                    EC.presence_of_element_located((By.XPATH,'//*[@id="ico-menu-3"]'))
-                )
-                consultas.click()
-
-                consultas2 = WebDriverWait(driver,20).until(
-                    EC.presence_of_element_located((By.XPATH,'//*[@id="submenu-ppal-3"]/ul/a[1]/li'))
-                )
-                consultas2.click()
 
                 #Buscar numero de referencia (intentar 2 veces)
                 for t in range(2):
@@ -571,7 +572,13 @@ def bot():
                         lookup = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Buscar movimientos']"))
                             )
+                        action.move_to_element(lookup)
+                        time.sleep(1)
+                        lookup.click()
+                        lookup.clear()
                         lookup.send_keys(confirmacion)
+
+                        time.sleep(3)
 
                         match = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
@@ -584,7 +591,7 @@ def bot():
                         monto5 = monto4[1]
                         monto6 = float(monto5.replace(',','.'))
 
-                        print(match, "/", confirmacion, "__", monto, "/", monto6) 
+                        print(match, "/", confirmacion, "__", monto1, "/", monto6) 
                         t = t+1
                     except TimeoutException as e:
                         error = e
@@ -600,12 +607,11 @@ def bot():
                     ultima = num_filas - 1
 
                     #Cancelar transacción
-                    accion_votc = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/div/div/div')
+                    accion_votc = driver.find_element_by_xpath("//div[@class='MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input']")
                     accion_votc.click()
                     time.sleep(2)
-                    item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[2]/span')
-                    action.move_to_element(item_votc)
-                    item_votc.click()
+                    item_votc = driver.find_element_by_xpath("//li[normalize-space()='Cancel, Confirmation Number Not Found']")
+                    action.move_to_element(item_votc).click().perform()
                     time.sleep(2)
                     cancelar = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/button')
                     cancelar.click()
@@ -625,29 +631,28 @@ def bot():
                         num_filas = len(filas)
                         ultima = num_filas - 1
 
-                        if monto6 != monto:
-                            time.sleep(2)
-                            discrepancia = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[2]/div[1]/button')
+                        if monto6 != monto1:
+                            time.sleep(1)
+                            discrepancia = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[3]/div[1]/button')
                             discrepancia.click()
-                            time.sleep(2)
-                            correccion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[2]/div[2]/div/div/input')
+                            time.sleep(1)
+                            correccion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[3]/div[2]/div/div/input')
                             correccion.send_keys(monto6)
-                            time.sleep(2)
+
                             interna = WebDriverWait(driver,20).until(
                                 EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[1]/button'))
                             )
                             interna.click()
-                            time.sleep(2)
+
                             confirmacion_interna = WebDriverWait(driver,20).until(
-                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr[4]/td/div/div/div/div/div[2]/div[1]/div[2]/div[2]/div/div/input'))
+                                EC.presence_of_element_located((By.XPATH,"//input[@class='MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense']"))
                             )
                             confirmacion_interna.send_keys(confirmacion)
-                            time.sleep(2)
-                            completar_entrada = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[2]/div[3]/button')
+                            
+                            completar_entrada = driver.find_element_by_xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary']")
                             action.move_to_element(completar_entrada)
                             completar_entrada.click
-                            time.sleep(2)
-                            monto = monto6
+                            monto1 = monto6
                             estatus = 'COMPLETADA'
                         else:
                             interna = WebDriverWait(driver,20).until(
@@ -656,11 +661,11 @@ def bot():
                             interna.click()
 
                             confirmacion_interna = WebDriverWait(driver,20).until(
-                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr[4]/td/div/div/div/div/div[2]/div[1]/div[2]/div[2]/div/div/input'))
+                                EC.presence_of_element_located((By.XPATH,"//input[@class='MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense']"))
                             )
                             confirmacion_interna.send_keys(confirmacion)
 
-                            completar_entrada = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div[2]/div[3]/button')
+                            completar_entrada = driver.find_element_by_xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained']")
                             action.move_to_element(completar_entrada)
                             completar_entrada.click()
 
@@ -675,10 +680,10 @@ def bot():
                         ultima = num_filas - 1
 
                         #Cancelar transacción
-                        accion_votc = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/div/div/div')
+                        accion_votc = driver.find_element_by_xpath("//div[@class='MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input']")
                         accion_votc.click()
 
-                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[2]/span')
+                        item_votc = driver.find_element_by_xpath("//li[normalize-space()='Cancel, Confirmation Number Not Found']")
                         action.move_to_element(item_votc).click().perform()
 
                         cancelar = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/button')
@@ -686,11 +691,10 @@ def bot():
 
                         estatus = 'CANCELADA'
                 except:
-                    pass
+                    driver.quit
 
                 #Pegar tiempo de operación
-                print(datetime.now()-begin_time, tipo)
-            
+                print(datetime.now()-begin_time, tipo)            
             #Exportar datos de operación a sheets
             lista_datos = ((str(tipo), 
                 str(trans_id),
