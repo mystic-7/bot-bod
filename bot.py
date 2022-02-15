@@ -486,7 +486,7 @@ def bot():
 
                 #Copiar confirmación de Salida
                 confirmacion = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][6]'))
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][7]'))
                 ).text
                 print("Transferencia lograda con éxito, número de confirmación:", confirmacion)
           
