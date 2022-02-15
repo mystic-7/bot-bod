@@ -488,7 +488,7 @@ def bot():
 
                 #Copiar confirmación de Salida
                 confirmacion = WebDriverWait(driver,20).until(
-                        EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t2"]'))
+                        EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t1"]'))
                 )
                 for n in confirmacion:
                     titulo = n.text
