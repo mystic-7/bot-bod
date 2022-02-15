@@ -17,6 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -72,6 +73,7 @@ def bot():
     chrome_options.add_argument("--start-maximazed")
     
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
+    ignored_exceptions=(NoSuchElementException,StaleElementReferenceException)
 
     #Definir ActionChains
     action = ActionChains(driver)
@@ -321,7 +323,7 @@ def bot():
                     pass
 
                 try:
-                    menu = WebDriverWait(driver,20).until(
+                    menu = WebDriverWait(driver,20,).until(
                     EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
                     )
                     menu.click()
@@ -560,17 +562,17 @@ def bot():
                 driver.switch_to.window(driver.window_handles[1])
                 
                 try:
-                    menu = WebDriverWait(driver,20).until(
+                    menu = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
                     )
                     menu.click()
             
-                    consultas = WebDriverWait(driver,20).until(
+                    consultas = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="ico-menu-3"]'))
                     )
                     consultas.click()
 
-                    consultas2 = WebDriverWait(driver,20).until(
+                    consultas2 = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="submenu-ppal-3"]/ul/a[1]/li'))
                     )
                     consultas2.click()
@@ -581,19 +583,19 @@ def bot():
                 for t in range(2):
                     error = None
                     try:
-                        rango_fechas = WebDriverWait(driver,20).until(
+                        rango_fechas = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@id="date-range1"]'))
                         )
                         rango_fechas.click()
 
-                        hoy = WebDriverWait(driver,20).until(
+                        hoy = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@class="day toMonth  valid real-today"]'))
                         )
                         action.move_to_element(hoy).click().perform()
                         action.move_to_element(hoy).click().perform()
 
 
-                        lookup = WebDriverWait(driver,20).until(
+                        lookup = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
                             EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Buscar movimientos']"))
                             )
                         action.move_to_element(lookup)
