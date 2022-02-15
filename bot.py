@@ -301,7 +301,7 @@ def bot():
 
                     print(("Datos de transaccion"),
                           ("Nombre", "RSV", "Tasa", "Monto"),
-                          (nombre_reserve, rsv, tasa, monto1, finalizar_salida)
+                          (nombre_reserve, rsv, tasa, monto1,)
                          )
                 except:
                     driver.quit()
@@ -486,9 +486,21 @@ def bot():
 
                 #Copiar confirmación de Salida
                 confirmacion = WebDriverWait(driver,20).until(
-                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][7]'))
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][1]'))
                 ).text
-                print("Transferencia lograda con éxito, número de confirmación:", confirmacion)
+                confirmacion1 = WebDriverWait(driver,20).until(
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][2]'))
+                ).text
+                confirmacion2 = WebDriverWait(driver,20).until(
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][3]'))
+                ).text
+                confirmacion3 = WebDriverWait(driver,20).until(
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][4]'))
+                ).text
+                confirmacion4 = WebDriverWait(driver,20).until(
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][5]'))
+                ).text
+                print("Transferencia lograda con éxito, número de confirmación:", confirmacion, confirmacion1, confirmacion2, confirmacion3, confirmacion4)
           
                 #Volver a DESK
                 driver.switch_to.window(driver.window_handles[0])
@@ -500,7 +512,7 @@ def bot():
                 
                 #Manejar Salida
                 finalizar_salida = WebDriverWait(driver,3).until(
-                    EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button'))
+                    EC.presence_of_element_located((By.XPATH,"//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained']"))
                 )
                 action.move_to_element(finalizar_salida)
                 finalizar_salida.click()
