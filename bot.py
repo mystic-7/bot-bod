@@ -58,10 +58,8 @@ def bot():
     #Call de chromedriver
     CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
     WINDOW_SIZE = "1920,1080"
-    PROXY = "45.179.164.189:999"
     
     chrome_options = Options()
-    chrome_options.add_argument('--proxy-server=%s' % PROXY)
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
     chrome_options.add_argument('--no-sandbox')
