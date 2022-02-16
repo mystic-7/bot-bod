@@ -343,7 +343,7 @@ def bot():
     confirmacion2 = WebDriverWait(driver,20).until(
         EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t2"]'))
     )
-    for m in confirmacion:
+    for m in confirmacion2:
         titulo2 = m.text
         i = i + 1
         print(i, titulo2)
