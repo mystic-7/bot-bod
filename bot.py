@@ -582,7 +582,7 @@ def bot():
                         )
                         rango_fechas.click()
 
-                        time.sleep(5)
+                        time.sleep(7)
                         hoy = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@class="day toMonth  valid real-today"]'))
                         )
@@ -748,8 +748,8 @@ def bot():
                 majorDimension = 'ROWS',
                 range = 'Log Operaciones!A1:A'
             ).execute()
-            print("Ultima fila en log:",len(filas_sheets))
-            last_row = len(filas_sheets)
+            last_row = len(filas_sheets)+1
+            print("Ultima fila en log:",last_row)
 
             #Exportar datos
             response = sheets.spreadsheets().values().update(
