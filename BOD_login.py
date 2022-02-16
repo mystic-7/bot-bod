@@ -210,7 +210,9 @@ def bot():
     continuar5.click()
     print("Sesión iniciada en el banco")
     
-
+    #Empezar a medir tiempo de operacion
+    begin_time = datetime.now()
+    
     try:
         menu = WebDriverWait(driver,20).until(
         EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
@@ -325,7 +327,7 @@ def bot():
     continuar8.click()
 
     continuar9 = WebDriverWait(driver,20).until(
-        EC.presence_of_element_located((By.XPATH,'//*[@id="LotesForm:ejecucion"]'))
+        EC.visibility_of_element_located((By.XPATH,'//*[@id="LotesForm:ConfirmDialog"]/div[1]/div[2]/a[2]'))
     )
     continuar9.click()
     print("Transferencia realizada con éxito")
@@ -352,4 +354,8 @@ def bot():
         titulo2 = m.text
         i = i + 1
         print(i, titulo2)
+        
+    #Pegar tiempo de operación
+    print(datetime.now()-begin_time)
+    
 bot()
