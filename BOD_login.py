@@ -61,7 +61,6 @@ def bot():
     WINDOW_SIZE = "1920,1080"
     
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
@@ -210,22 +209,6 @@ def bot():
     continuar5.click()
     print("Sesión iniciada en el banco")
     
-    #Busqueda de transacciones tomadas
-    driver.switch_to.window(driver.window_handles[0])
-    print("Buscando transacciones")
-
-
-                 
-    #Verificar inactividad en banco
-    try:
-        driver.switch_to.window(driver.window_handles[1])
-        keepalive = WebDriverWait(driver,7).until(
-                EC.visibility_of_element_located((By.XPATH,'//*[@href="javascript:keepAliveSession()"]'))
-        )
-        action.move_to_element
-        keepalive.click()
-    except:
-        pass
 
     try:
         menu = WebDriverWait(driver,20).until(
@@ -233,7 +216,7 @@ def bot():
         )
         menu.click()
     except:
-            driver.quit
+        driver.quit
 
     transfers = driver.find_element_by_xpath('//*[@id="ico-menu-12"]')
     transfers.click()
@@ -251,13 +234,14 @@ def bot():
         action.move_to_element(add)
         add.click()
         add.send_keys("solimilas")
-
-        soli = WebDriverWait(driver,20).until(
-        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtTerceros_data"]/tr/td[1]'))
-        )
-        soli.click()
     except:
         driver.quit
+
+    time.sleep(5)
+    soli = WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtTerceros_data"]'))
+    )
+    action.move_to_element(soli).click().perform()
 
     for t in range(2):
         error = None
@@ -303,7 +287,7 @@ def bot():
     print("Realizando transferencia")
 
     origen = WebDriverWait(driver,10).until(
-        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtProductoTercero_data"]/tr/td[1]'))
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtProductoTercero"]'))
     )
     origen.click()
 
@@ -347,17 +331,21 @@ def bot():
         driver.quit
 
     #Copiar confirmación de Salida
+    i = 0
     confirmacion = WebDriverWait(driver,20).until(
             EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t1"]'))
     )
     for n in confirmacion:
         titulo = n.text
-        print("Transferencia lograda con éxito, número de confirmación:", titulo)
-
+        i = i + 1
+        print(i, titulo)
+    i = 0
     confirmacion2 = WebDriverWait(driver,20).until(
         EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t2"]'))
     )
-    for m in confirmacion2:
+    for m in confirmacion:
         titulo2 = m.text
-        print("Transferencia lograda con éxito, número de confirmación:", titulo2)
+        i = i + 1
+        print(i, titulo2)
+
 bot()
