@@ -135,7 +135,7 @@ def bot():
     credenciales = sheets.spreadsheets().values().get(
         spreadsheetId = spreadsheet_id,
         majorDimension = 'COLUMNS',
-        range = 'Credenciales!D4:D5'
+        range = 'Credenciales!B4:B7'
     ).execute()
 
     tipo = credenciales['values'][0][0]
