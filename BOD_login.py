@@ -293,44 +293,43 @@ def bot():
     origen.click()
 
     #Completar proceso de transferencia
-    try:
-        monto = WebDriverWait(driver,20).until(
-            EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:monto"]'))
-        )
-        monto.send_keys("1")
 
-        continuar6 =  WebDriverWait(driver,20).until(
-                EC.presence_of_element_located((By.XPATH,'//a[@class="ui-commandlink ui-widget bod-button button-activar"]'))
-        )
-        continuar6.click()
+    monto = WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:monto"]'))
+    )
+    monto.send_keys("1")
 
-        select_cuenta =  WebDriverWait(driver,20).until(
-            EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtOrigen_data"]/tr'))
-        )
-        select_cuenta.click()
-        
-        select_concepto =  WebDriverWait(driver,20).until(
-            EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:concepto"]'))
-        )
-        select_concepto.send_keys('pago')
+    continuar6 =  WebDriverWait(driver,20).until(
+            EC.presence_of_element_located((By.XPATH,'//a[@class="ui-commandlink ui-widget bod-button button-activar"]'))
+    )
+    continuar6.click()
 
-        continuar7 =  WebDriverWait(driver,20).until(
-            EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:botonConcepto"]'))
-        )
-        continuar7.click()
+    select_cuenta =  WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtOrigen_data"]/tr'))
+    )
+    select_cuenta.click()
 
-        continuar8 = WebDriverWait(driver,20).until(
-            EC.presence_of_element_located((By.XPATH,'//*[@id="LotesForm:botonTrasferir"]'))
-        )
-        continuar8.click()
+    select_concepto =  WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:concepto"]'))
+    )
+    select_concepto.send_keys('pago')
 
-        continuar9 = WebDriverWait(driver,20).until(
-            EC.visibility_of_element_located((By.XPATH,'//*[@id="LotesForm:ejecucion"]'))
-        )
-        continuar9.click()
-        print("Transferencia realizada con éxito")
-    except:
-        driver.quit
+    continuar7 =  WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:botonConcepto"]'))
+    )
+    continuar7.click()
+
+    continuar8 = WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="LotesForm:botonTrasferir"]'))
+    )
+    continuar8.click()
+
+    continuar9 = WebDriverWait(driver,20).until(
+        EC.visibility_of_element_located((By.XPATH,'//*[@id="LotesForm:ejecucion"]'))
+    )
+    continuar9.click()
+    print("Transferencia realizada con éxito")
+
         
 
     #Copiar confirmación de Salida
