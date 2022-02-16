@@ -302,8 +302,8 @@ def bot():
                     finalizar_salida = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[1]/div/div/div[3]/button').get_attribute("class")
 
                     print(("Datos de transaccion"),
-                          ("Nombre", "RSV", "Tasa", "Monto"),
-                          (nombre_reserve, rsv, tasa, monto1,)
+                          ("Nombre", "RSV", "Tasa", "Monto", "Numero de CTA"),
+                          (nombre_reserve, rsv, tasa, monto1, num_cuenta)
                          )
                 except:
                     driver.quit()
@@ -323,7 +323,7 @@ def bot():
                     pass
 
                 try:
-                    menu = WebDriverWait(driver,20,).until(
+                    menu = WebDriverWait(driver,20).until(
                     EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
                     )
                     menu.click()
@@ -354,7 +354,7 @@ def bot():
                     else:
                         s = 20
                     try:
-                        otp = WebDriverWait(driver,5).until(
+                        otp = WebDriverWait(driver,3).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@class="ancho100 zonaSeguraInput"]'))
                         )
                         print("Esperando por clave especial")
@@ -488,11 +488,9 @@ def bot():
 
                 #Copiar confirmación de Salida
                 confirmacion = WebDriverWait(driver,20).until(
-                        EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t1"]'))
-                )
-                for n in confirmacion:
-                    titulo = n.text
-                    print("Transferencia lograda con éxito, número de confirmación:", titulo)
+                        EC.visibility_of_element_located((By.XPATH,'//td[@id="t2"][6]'))
+                ).text
+                print("Transferencia lograda con éxito, número de confirmación:", confirmacion)
           
                 #Volver a DESK
                 driver.switch_to.window(driver.window_handles[0])
@@ -538,19 +536,30 @@ def bot():
                 
                 #Ir a Consultas
                 driver.switch_to.window(driver.window_handles[1])
-                
+
+                #Verificar inactividad en banco
                 try:
-                    menu = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
+                    driver.switch_to.window(driver.window_handles[1])
+                    keepalive = WebDriverWait(driver,7).until(
+                            EC.visibility_of_element_located((By.XPATH,'//*[@href="javascript:keepAliveSession()"]'))
+                    )
+                    action.move_to_element
+                    keepalive.click()
+                except:
+                    pass
+
+                try:
+                    menu = WebDriverWait(driver,20).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
                     )
                     menu.click()
-            
-                    consultas = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
+
+                    consultas = WebDriverWait(driver,20).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="ico-menu-3"]'))
                     )
                     consultas.click()
 
-                    consultas2 = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
+                    consultas2 = WebDriverWait(driver,20).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="submenu-ppal-3"]/ul/a[1]/li'))
                     )
                     consultas2.click()
@@ -561,23 +570,24 @@ def bot():
                 for t in range(2):
                     error = None
                     try:
-                        rango_fechas = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
+                        rango_fechas = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@id="date-range1"]'))
                         )
                         rango_fechas.click()
 
-                        hoy = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
+                        time.sleep(3)
+                        hoy = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@class="day toMonth  valid real-today"]'))
                         )
                         action.move_to_element(hoy).click().perform()
+                        time.sleep(1)
                         action.move_to_element(hoy).click().perform()
 
-
-                        lookup = WebDriverWait(driver,20,ignored_exceptions=ignored_exceptions).until(
+                        time.sleep(3)
+                        lookup = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Buscar movimientos']"))
                             )
                         action.move_to_element(lookup)
-                        time.sleep(1)
                         lookup.click()
                         lookup.clear()
                         lookup.send_keys(confirmacion)
@@ -731,6 +741,7 @@ def bot():
                 majorDimension = 'ROWS',
                 range = 'Log Operaciones!A1:A'
             ).execute()
+            print("Ultima fila en sheet-log",len(filas_sheets))
             last_row = len(filas_sheets)+1
 
             #Exportar datos
@@ -745,7 +756,7 @@ def bot():
         else:
             try:
                 driver.switch_to.window(driver.window_handles[1])
-                keepalive = WebDriverWait(driver,7).until(
+                keepalive = WebDriverWait(driver,5).until(
                         EC.visibility_of_element_located((By.XPATH,'//*[@href="javascript:keepAliveSession()"]'))
                 )
                 action.move_to_element
