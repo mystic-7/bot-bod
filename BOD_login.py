@@ -330,7 +330,8 @@ def bot():
         continuar9.click()
     except:
         driver.quit
-
+        
+    time.sleep(7)
     #Copiar confirmación de Salida
     i = 0
     confirmacion = WebDriverWait(driver,20).until(
