@@ -240,7 +240,7 @@ def bot():
 
     time.sleep(5)
     soli = WebDriverWait(driver,20).until(
-        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtTerceros_data"]'))
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtTerceros"]'))
     )
     action.move_to_element(soli).click().perform()
 
