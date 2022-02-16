@@ -240,7 +240,7 @@ def bot():
 
     time.sleep(5)
     soli = WebDriverWait(driver,20).until(
-        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtTerceros"]'))
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtTerceros_data"]/tr'))
     )
     action.move_to_element(soli).click().perform()
 
@@ -288,7 +288,7 @@ def bot():
     print("Realizando transferencia")
 
     origen = WebDriverWait(driver,10).until(
-        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtProductoTercero"]'))
+        EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:dtProductoTercero_data"]/tr'))
     )
     origen.click()
 
