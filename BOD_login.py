@@ -325,7 +325,7 @@ def bot():
     continuar8.click()
 
     continuar9 = WebDriverWait(driver,20).until(
-        EC.visibility_of_element_located((By.XPATH,'//*[@id="LotesForm:ejecucion"]'))
+        EC.presence_of_element_located((By.XPATH,'//*[@id="LotesForm:ejecucion"]'))
     )
     continuar9.click()
     print("Transferencia realizada con éxito")
