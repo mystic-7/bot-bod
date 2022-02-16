@@ -328,17 +328,18 @@ def bot():
             EC.visibility_of_element_located((By.XPATH,'//*[@id="LotesForm:ejecucion"]'))
         )
         continuar9.click()
+        print("Transferencia realizada con éxito")
     except:
         driver.quit
         
 
     #Copiar confirmación de Salida
-    freno = WebDriverWait(driver,20).until(
+    freno = WebDriverWait(driver,30).until(
         EC.presence_of_element_located((By.XPATH,'//*[@id="formResultado"]/div[2]/a'))
     )
     i = 0
     confirmacion = WebDriverWait(driver,20).until(
-            EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t1"]'))
+        EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t1"]'))
     )
     for n in confirmacion:
         titulo = n.text
