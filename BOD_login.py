@@ -331,8 +331,11 @@ def bot():
     except:
         driver.quit
         
-    time.sleep(7)
+
     #Copiar confirmación de Salida
+    freno = WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="formResultado"]/div[2]/a'))
+    )
     i = 0
     confirmacion = WebDriverWait(driver,20).until(
             EC.visibility_of_all_elements_located((By.XPATH,'//td[@id="t1"]'))
@@ -349,10 +352,4 @@ def bot():
         titulo2 = m.text
         i = i + 1
         print(i, titulo2)
-        
-    referencia = WebDriverWait(driver,20).until(
-        EC.presence_of_element_located((By.XPATH,'//*[contains(text(), "Referencia")]'))
-    ).get_attribute("class")
-    print(str(referencia))
-
 bot()
