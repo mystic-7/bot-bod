@@ -348,5 +348,10 @@ def bot():
         titulo2 = m.text
         i = i + 1
         print(i, titulo2)
+        
+    referencia = WebDriverWait(driver,20).until(
+        EC.presence_of_element_located((By.XPATH,'//*[contains(text(), "Referencia")]'))
+    ).get_attribute("class")
+    print(str(referencia))
 
 bot()
