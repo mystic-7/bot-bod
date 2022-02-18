@@ -419,7 +419,7 @@ def bot():
                 benf_id = WebDriverWait(driver,10).until(
                     EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:numeroIdentificacion"]'))
                 )
-                benf_id.send_keys(int(identificacion))
+                benf_id.send_keys(int(identificacion.replace(".","")))
                 time.sleep(1)
                 benf_name =  WebDriverWait(driver,10).until(
                     EC.visibility_of_element_located((By.XPATH,'//*[@id="TransferenciasForm:nombreCompleto"]'))
