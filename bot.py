@@ -626,7 +626,20 @@ def bot():
                     )
                     consultas2.click()
                 except:
-                    driver.quit
+                    menu = WebDriverWait(driver,20).until(
+                        EC.presence_of_element_located((By.XPATH,'//*[@id="supercontenedor"]/div[1]'))
+                    )
+                    menu.click()
+
+                    consultas = WebDriverWait(driver,20).until(
+                        EC.presence_of_element_located((By.XPATH,'//*[@id="ico-menu-3"]'))
+                    )
+                    consultas.click()
+
+                    consultas2 = WebDriverWait(driver,20).until(
+                        EC.presence_of_element_located((By.XPATH,'//*[@id="submenu-ppal-3"]/ul/a[1]/li'))
+                    )
+                    consultas2.click()
 
                 #Buscar numero de referencia (intentar 2 veces)
                 for t in range(2):
@@ -671,10 +684,14 @@ def bot():
                             lookup.send_keys(confirmacion)
 
                         time.sleep(3)
-
-                        match = WebDriverWait(driver,20).until(
-                            EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
-                            ).text
+                        try:
+                            match = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
+                                ).text
+                        except:
+                            match = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
+                                ).text
                         try:
                             monto3 = WebDriverWait(driver,20).until(
                                 EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[5]/p'))
