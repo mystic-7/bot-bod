@@ -28,10 +28,12 @@ from googleapiclient.errors import HttpError
 #Ignorar DeprecationWarning
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
-# If modifying these scopes, delete the file token.pickle.
+#Protocolo de acceso e iniciación de Google API
+
+#Si se modifican los SCOPES, borrar el archivo token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly','https://www.googleapis.com/auth/spreadsheets']
 
-
+#Proceso de conexión
 creds = None
 # The file token.pickle stores the user's access and refresh tokens, and is
 # created automatically when the authorization flow completes for the first
@@ -51,12 +53,13 @@ if not creds or not creds.valid:
     with open('token.pickle', 'wb') as token:
         pickle.dump(creds, token)
 
-#API services
+#Servicios de API
 gmail = build('gmail', 'v1', credentials=creds)
 sheets = build('sheets','v4', credentials=creds)
 
+#Función principal definida como bot
 def bot():
-    #Call de chromedriver
+    #Llamada a Chromedriver
     CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
     WINDOW_SIZE = "1920,1080"
     
