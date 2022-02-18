@@ -675,10 +675,15 @@ def bot():
                         match = WebDriverWait(driver,20).until(
                             EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
                             ).text
-
-                        monto3 = WebDriverWait(driver,20).until(
-                            EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[5]/p'))
-                            ).text
+                        try:
+                            monto3 = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[5]/p'))
+                                ).text
+                        except:
+                            monto3 = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[5]/p'))
+                                ).text
+                            
                         monto4 = monto3.split(" ")
                         monto5 = monto4[1]
                         monto6 = float(monto5.replace(',','.'))
