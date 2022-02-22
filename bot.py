@@ -282,8 +282,11 @@ def bot():
             ultima = num_filas - 1
 
             #Recoger datos de transacción más antigua BOD
-            drop_down = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima)+']/td[8]/button').click()
-
+            try:
+                drop_down = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima)+']/td[8]/button').click()
+            except:
+                continue
+                
             #Volver a contar transacciones
             filas = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr')
                 
@@ -486,8 +489,12 @@ def bot():
                     accion_votc = driver.find_element_by_xpath("//div[@class='MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input']")
                     accion_votc.click()
                     time.sleep(2)
-                    item_votc = driver.find_element_by_xpath("//li[normalize-space()='Cancel, Account Number Not Found']//span[@class='MuiTouchRipple-root']")
-                    action.move_to_element(item_votc).click().perform()
+                    try:
+                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[1]")
+                        action.move_to_element(item_votc).click().perform()
+                    except:
+                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[1]")
+                        action.move_to_element(item_votc).click().perform()
                     time.sleep(2)
                     cancelar = driver.find_element_by_xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained']")
                     cancelar.click()
@@ -495,7 +502,7 @@ def bot():
                     estatus = 'CANCELADA'
 
                     #Pegar tiempo de operación
-                    print(datetime.now()-begin_time, tipo)
+                    print(datetime.now()-begin_time, tipo, estatus)
                     continue
 
                 #Completar proceso de transferencia
@@ -561,7 +568,7 @@ def bot():
                 estatus = 'COMPLETADA'
 
                 #Pegar tiempo de operación
-                print(datetime.now()-begin_time, tipo)
+                print(datetime.now()-begin_time, tipo, estatus)
 
             #Entradas
             elif banco == 'BOD' and tipo == 'Buy':
@@ -723,17 +730,21 @@ def bot():
                     #Cancelar transacción
                     accion_votc = driver.find_element_by_xpath("//div[@class='MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input']")
                     accion_votc.click()
-                    time.sleep(5)
-                    item_votc = driver.find_element_by_xpath("//li[normalize-space()='Cancel, Confirmation Number Not Found']//span[@class='MuiTouchRipple-root']")
-                    action.move_to_element(item_votc).click().perform()
-                    time.sleep(5)
+                    time.sleep(1)
+                    try:
+                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                        action.move_to_element(item_votc).click().perform()
+                    except:
+                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                        action.move_to_element(item_votc).click().perform()
+                    time.sleep(1)
                     cancelar = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/button')
                     cancelar.click()
 
                     estatus = 'CANCELADA'
 
                     #Pegar tiempo de operación
-                    print(datetime.now()-begin_time, tipo)
+                    print(datetime.now()-begin_time, tipo, estatus)
                     continue
 
                 #Manejar entrada
@@ -799,10 +810,14 @@ def bot():
                         #Cancelar transacción
                         accion_votc = driver.find_element_by_xpath("//div[@class='MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input']")
                         accion_votc.click()
-
-                        item_votc = driver.find_element_by_xpath("//li[normalize-space()='Cancel, Confirmation Number Not Found']//span[@class='MuiTouchRipple-root']")
-                        action.move_to_element(item_votc).click().perform()
-
+                        time.sleep(1)
+                        try:
+                            item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                            action.move_to_element(item_votc).click().perform()
+                        except:
+                            item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                            action.move_to_element(item_votc).click().perform()
+                        time.sleep(1)
                         cancelar = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/button')
                         cancelar.click()
 
@@ -811,7 +826,7 @@ def bot():
                     driver.quit
 
                 #Pegar tiempo de operación
-                print(datetime.now()-begin_time, tipo)
+                print(datetime.now()-begin_time, tipo, estatus)
 
             #Exportar datos de operación a sheets
             lista_datos = ((str(tipo), 
