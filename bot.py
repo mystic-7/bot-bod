@@ -490,10 +490,10 @@ def bot():
                     accion_votc.click()
                     time.sleep(2)
                     try:
-                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[1]")
+                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[1]')
                         action.move_to_element(item_votc).click().perform()
                     except:
-                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[1]")
+                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[1]')
                         action.move_to_element(item_votc).click().perform()
                     time.sleep(2)
                     cancelar = driver.find_element_by_xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained']")
@@ -732,10 +732,10 @@ def bot():
                     accion_votc.click()
                     time.sleep(1)
                     try:
-                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[2]')
                         action.move_to_element(item_votc).click().perform()
                     except:
-                        item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[2]')
                         action.move_to_element(item_votc).click().perform()
                     time.sleep(1)
                     cancelar = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/button')
@@ -812,10 +812,10 @@ def bot():
                         accion_votc.click()
                         time.sleep(1)
                         try:
-                            item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                            item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[2]')
                             action.move_to_element(item_votc).click().perform()
                         except:
-                            item_votc = driver.find_element_by_xpath("//*[@id="menu-"]/div[3]/ul/li[2]")
+                            item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[2]')
                             action.move_to_element(item_votc).click().perform()
                         time.sleep(1)
                         cancelar = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[2]/div[2]/div/button')
