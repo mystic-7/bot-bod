@@ -88,7 +88,7 @@ def bot():
     print("Hola operardor VAST, bienvenido a tu BOT BOD, en breves momentos empezaré a operar.")
        
     #Inicio de sesion DESK
-    driver.get("https://rpay-production.herokuapp.com/login")
+    driver.get("https://desk.reserve.org/login")
     
 
     #Credenciales Reserve
