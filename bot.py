@@ -326,8 +326,33 @@ def bot():
                     print(df)
                 except:
                     driver.quit()
+                    
+                #Cancelar transaccion por no ser BOD
+                if num_cuenta([:4]) != "0116":
 
-                #Ir a transferencias
+                    #Cancelar transacción
+                    accion_votc = driver.find_element_by_xpath("//div[@class='MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input']")
+                    accion_votc.click()
+                    time.sleep(2)
+                    try:
+                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[1]')
+                        action.move_to_element(item_votc).click().perform()
+                    except:
+                        item_votc = driver.find_element_by_xpath('//*[@id="menu-"]/div[3]/ul/li[1]')
+                        action.move_to_element(item_votc).click().perform()
+                    time.sleep(2)
+                    cancelar = driver.find_element_by_xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained']")
+                    cancelar.click()
+
+                    estatus = 'CANCELADA'
+
+                    #Pegar tiempo de operación
+                    print(datetime.now()-begin_time, tipo, estatus)
+                    continue
+                else:
+                    pass
+                
+                #Ir a transferencias 
                 try:
                     driver.switch_to.window(driver.window_handles[1])
                 except:
