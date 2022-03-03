@@ -83,7 +83,7 @@ def bot():
     action = ActionChains(driver)
 
     #Definir TimeZone
-    tz = timezone('Etc/GMT+4')
+    tz = timezone('America/Caracas')
 
 
     #Spreadsheet ID
