@@ -811,7 +811,7 @@ def bot():
                         monto5 = monto4[1]
                         monto6 = float(monto5.replace('.','').replace(',','.'))
                         t = t+1
-                    except TimeoutException, NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException as e:
+                    except (TimeoutException, NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException) as e:
                         error = e
                     if error is None:
                         print("Transacción encontrada")
