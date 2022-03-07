@@ -19,6 +19,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import ElementClickInterceptedException
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -810,7 +811,7 @@ def bot():
                         monto5 = monto4[1]
                         monto6 = float(monto5.replace('.','').replace(',','.'))
                         t = t+1
-                    except TimeoutException as e:
+                    except TimeoutException, NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException as e:
                         error = e
                     if error is None:
                         print("Transacción encontrada")
