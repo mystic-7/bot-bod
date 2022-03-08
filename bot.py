@@ -357,12 +357,12 @@ def bot():
                 tasa = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[2]/div[4]/div/p').text
                 telefono = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[3]/div/div/p').text
                 beneficiario = WebDriverWait(driver,20).until(
-                            EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[1]/div/p'))
+                            EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[1]/div/p'))
                 ).text
-                persona = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[2]/div/p').text
-                identificacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[3]/div/p').text
-                tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[4]/div/p').text
-                num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[4]/div/div[5]/div/p').text
+                persona = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[2]/div/p').text
+                identificacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[3]/div/p').text
+                tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[4]/div/p').text
+                num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p').text
                 monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
 
                 lista_impresa = []
@@ -748,13 +748,21 @@ def bot():
                     consultas2.click()
 
                 #Buscar numero de referencia (intentar 2 veces)
-                for t in range(2):
+                for t in range(4):
                     error = None
+                    print("Buscando transacción, intento #",t)
                     try:
-                        rango_fechas = WebDriverWait(driver,20).until(
-                            EC.presence_of_element_located((By.XPATH,'//*[@id="date-range1"]'))
-                        )
-                        rango_fechas.click()
+                        try:
+                            rango_fechas = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="date-range1"]'))
+                            )
+                            rango_fechas.click()
+                        except:
+                            rango_fechas = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="date-range1"]'))
+                            )
+                            rango_fechas.click()
+                            
                         try:
                             time.sleep(2)
                             hoy = WebDriverWait(driver,20).until(
@@ -789,7 +797,7 @@ def bot():
                             lookup.clear()
                             lookup.send_keys(confirmacion)
 
-                        time.sleep(3)
+                        time.sleep(4)
                         try:
                             match = WebDriverWait(driver,20).until(
                                 EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
@@ -810,8 +818,8 @@ def bot():
                         monto4 = monto3.split(" ")
                         monto5 = monto4[1]
                         monto6 = float(monto5.replace('.','').replace(',','.'))
-                        t = t+1
-                    except (TimeoutException, NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException) as e:
+                        t += 1
+                    except (TimeoutException) as e:
                         error = e
                     if error is None:
                         print("Transacción encontrada")
