@@ -349,22 +349,25 @@ def bot():
             #Procesar Salida
             if tipo == 'Sell' or tipo == 'Salidas':
                 print("Salida",banco)
-
-                trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
-                nombre_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[2]/div/p').text
-                usuario_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[3]/div/p').text
-                rsv = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[4]/div/p').text
-                tasa = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[2]/div[4]/div/p').text
-                telefono = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[3]/div/div/p').text
-                beneficiario = WebDriverWait(driver,20).until(
-                            EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[1]/div/p'))
-                ).text
-                persona = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[2]/div/p').text
-                identificacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[3]/div/p').text
-                tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[4]/div/p').text
-                num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p').text
-                monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
-
+                
+                try:
+                    trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
+                    nombre_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[2]/div/p').text
+                    usuario_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[3]/div/p').text
+                    rsv = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[4]/div/p').text
+                    tasa = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[2]/div[4]/div/p').text
+                    telefono = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[3]/div/div/p').text
+                    beneficiario = WebDriverWait(driver,20).until(
+                                EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[1]/div/p'))
+                    ).text
+                    persona = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[2]/div/p').text
+                    identificacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[3]/div/p').text
+                    tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[4]/div/p').text
+                    num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p').text
+                    monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
+                except:
+                    continue
+                    
                 lista_impresa = []
                 datos_usuario = {
                     "Nombre": nombre_reserve,
@@ -672,6 +675,7 @@ def bot():
             #Entradas
             elif tipo == 'Buy' or tipo == 'Entradas':
                 print("Entrada",banco)
+                
                 try:
                     trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
                     nombre_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[2]/div/p').text
@@ -687,6 +691,8 @@ def bot():
                     num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p').text
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
                     confirmacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[6]/div/div/div/p').text
+                except:
+                    continue
                     
                     lista_impresa = []
                     datos_usuario = {
@@ -699,8 +705,6 @@ def bot():
                     lista_impresa.append(datos_usuario)
                     df = pd.DataFrame(lista_impresa)
                     print(df)                
-                except:
-                    driver.quit
                 
                 #Ir a Consultas
                 driver.switch_to.window(driver.window_handles[1])
