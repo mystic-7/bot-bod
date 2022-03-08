@@ -347,7 +347,7 @@ def bot():
             filas = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr')    
 
             #Procesar Salida
-            if banco == 'BOD' and tipo == 'Sell':
+            if banco == 'BOD' and tipo == 'Salidas':
                 print("Salida",banco)
 
                 trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
@@ -670,7 +670,7 @@ def bot():
                     pass
 
             #Entradas
-            elif banco == 'BOD' and tipo == 'Buy':
+            elif banco == 'BOD' and tipo == 'Entradas':
                 print("Entrada",banco)
                 try:
                     trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
