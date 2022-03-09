@@ -566,7 +566,7 @@ def bot():
                 continuar_sin_guardar.click()
 
                 #Error ocasional
-
+                error = None
                 try:
                     invalido = WebDriverWait(driver,3).until(
                         EC.presence_of_element_located((By.XPATH,'//*[@id="TransferenciasForm"]/div[5]/div[4]/div[2]/span'))
