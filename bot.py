@@ -106,7 +106,10 @@ def bot():
     clave = credenciales['values'][0][2]
 
     #Inicio de sesion DESK
-    driver.get(desk_link)
+    try:
+        driver.get(desk_link)
+    except:
+        print("Link para accesar el portal cambió")
 
     #Login//
     #Usuario
@@ -134,7 +137,8 @@ def bot():
         print("Sesión iniciada en Desk")
     except:
         driver.quit
-        print("No se logró iniciar sesión en Desk, reiniciar bot")
+        print("No se logró iniciar sesión en Desk, reiniciando bot")
+        bot()
         
     #Inicio de sesion BOD
     time.sleep(1)
@@ -221,7 +225,8 @@ def bot():
             respuesta.send_keys(preguntas['values'][5][1])
     except:
         driver.quit
-        print("Inicio de sesion fallido, reiniciar bot")
+        print("Inicio de sesion fallido, reiniciando bot")
+        bot()
     try:
         respuesta2 = WebDriverWait(driver,5).until(
             EC.presence_of_element_located((By.XPATH,'//input[@id="j_idt13:j_idt14:form-psec:j_idt17:1:respuestaPregunta"]'))
@@ -262,6 +267,15 @@ def bot():
 
     continuar5 = driver.find_element_by_xpath('//*[@id="form:siguiente"]')
     continuar5.click()
+    
+    try:
+        digitel = WebDriverWait(driver,20).until(
+                EC.visibility_of_element_located((By.XPATH,'//*[@id="j_idt368:xy"]/a'))
+            )
+        digitel.click()
+    except:
+        pass
+    
     print("Sesión iniciada en el banco")
     
     #Busqueda de transacciones tomadas
@@ -351,21 +365,42 @@ def bot():
                 print("Salida",banco)
                 
                 try:
-                    trans_id = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p').text
-                    nombre_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[2]/div/p').text
-                    usuario_reserve = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[3]/div/p').text
-                    rsv = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[4]/div/p').text
-                    tasa = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[2]/div[4]/div/p').text
-                    telefono = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[3]/div/div/p').text
+                    trans_id = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[1]/div/p'))
+                    ).text
+                    nombre_reserve = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[2]/div/p'))
+                    ).text
+                    usuario_reserve = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[3]/div/p'))
+                    ).text
+                    rsv = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[1]/div[4]/div/p'))
+                    ).text
+                    tasa = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[2]/div[4]/div/p'))
+                    ).text
+                    telefono = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[3]/div/div/p'))
+                    ).text
                     beneficiario = WebDriverWait(driver,20).until(
                                 EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[1]/div/p'))
                     ).text
-                    persona = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[2]/div/p').text
-                    identificacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[3]/div/p').text
-                    tipo_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[4]/div/p').text
-                    num_cuenta = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p').text
+                    persona = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[2]/div/p'))
+                    ).text
+                    identificacion = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[3]/div/p'))
+                    ).text
+                    tipo_cuenta = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[4]/div/p'))
+                    ).text
+                    num_cuenta = WebDriverWait(driver,20).until(
+                                EC.presence_of_element_located((By.XPATH,'//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[5]/div/div[5]/div/p'))
+                    ).text
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
                 except:
+                    print("Error recogiendo los datos, posible cambio en el portal, si persiste contactar a soporte)
                     continue
                     
                 lista_impresa = []
@@ -496,6 +531,8 @@ def bot():
                         break
                 if error is not None:
                     driver.quit
+                    print("Error recibiendo clave especial, reiniciando bot")
+                    bot()
           
                 print("Realizando transferencia")
                 benf_tipo = WebDriverWait(driver,10).until(
@@ -558,9 +595,10 @@ def bot():
                 except (TimeoutException, NoSuchElementException) as e:
                     error = e
                     if error is not None:
-                        print('Todo bien')
+                        print("Todo bien")
                 if error is None:
                     #Cancelar transaccion por error en los datos
+                    print("Datos equivocados, cancelando transacción")
                     #Volver a DESK
                     driver.switch_to.window(driver.window_handles[0])
                     
@@ -692,6 +730,7 @@ def bot():
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
                     confirmacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[6]/div/div/div/p').text
                 except:
+                    print("Error recogiendo los datos, posible cambio en el portal, si persiste contactar a soporte)
                     continue
                     
                     lista_impresa = []
