@@ -400,7 +400,7 @@ def bot():
                     ).text
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
                 except:
-                    print("Error recogiendo los datos, posible cambio en el portal, si persiste contactar a soporte)
+                    print("Error recogiendo los datos, posible cambio en el portal, si persiste contactar a soporte")
                     continue
                     
                 lista_impresa = []
@@ -730,7 +730,7 @@ def bot():
                     monto1 = round(float(rsv)*float(tasa.replace(",",".")),2)
                     confirmacion = driver.find_element_by_xpath('//*[@id="root"]/div/main/div[1]/div[2]/div/div[3]/table/tbody/tr['+str(ultima+1)+']/td/div/div/div/div/div[1]/div[1]/div[6]/div/div/div/p').text
                 except:
-                    print("Error recogiendo los datos, posible cambio en el portal, si persiste contactar a soporte)
+                    print("Error recogiendo los datos, posible cambio en el portal, si persiste contactar a soporte")
                     continue
                     
                     lista_impresa = []
