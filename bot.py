@@ -271,7 +271,7 @@ def bot():
     try:
         digitel = WebDriverWait(driver,20).until(
                 EC.visibility_of_element_located((By.XPATH,'//*[@id="j_idt368:xy"]/a'))
-            )
+        )
         digitel.click()
     except:
         pass
