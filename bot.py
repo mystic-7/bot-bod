@@ -821,7 +821,6 @@ def bot():
                                 lookup.clear()
                                 lookup.send_keys(confirmacion)
                             except:
-                                print("Esperando para buscar")
                                 continue
                             a = 1 
 
