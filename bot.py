@@ -825,7 +825,7 @@ def bot():
                             a = 1 
 
 
-                        time.sleep(4)
+                        time.sleep(8)
                         try:
                             match = WebDriverWait(driver,20).until(
                                 EC.presence_of_element_located((By.XPATH,'//*[@id="formMovimientos:tablaMovimientos:0:detalle_movimiento"]/div[3]/p'))
