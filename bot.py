@@ -307,8 +307,8 @@ def bot():
                 str(num_cuenta),
                 str(confirmacion),
                 str(estatus),
-                str(datetime.now(tz).date()),
-                str(datetime.now(tz).time()),
+                str(datetime.now().date()),
+                str(datetime.now().time()),
                 str(datetime.now()-begin_time)),
                 ()
             )
